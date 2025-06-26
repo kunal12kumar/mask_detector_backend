@@ -2,7 +2,7 @@
 import cv2
 import os 
 import uuid
-from ultralytics import yolo
+from ultralytics import YOLO
 from app.utils.file_utils import save_upload_file , delete_file
 from app.services.load_trained_model import model
 import matplotlib.pyplot as plt

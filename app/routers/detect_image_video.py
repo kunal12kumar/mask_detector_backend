@@ -6,7 +6,7 @@ from app.controllers.detect_controller_image_video import process_video , proces
 
 router=APIRouter(prefix="/detect" ,tags=["Detection"])
 
-@router.post('/image')
+@router.get('/image')
 async def detect__mask_of_image(file: UploadFile = File(...)):
      result = await process_image(file)
      print(result)
