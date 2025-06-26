@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 
-async def detect_image(file):
+async def process_image(file):
     file_path=save_upload_file(file)   # here we are fetching the image path so, we can work on that
     
     bgr_image=cv2.imread(file_path)
