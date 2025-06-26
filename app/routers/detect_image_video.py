@@ -3,14 +3,16 @@ from fastapi import APIRouter , UploadFile , File
 from fastapi.responses import JSONResponse , FileResponse 
 from app.controllers.detect_controller_image_video import process_video , process_image
 
+HF_REPO_ID = "kunal12kumardev/Face_mask_detection" 
 
 router=APIRouter(prefix="/detect" ,tags=["Detection"])
 
-@router.get('/image')
+@router.post('/image')
 async def detect__mask_of_image(file: UploadFile = File(...)):
+     print("getting images")
      result = await process_image(file)
      print(result)
-     return JSONResponse(content=result)
+     return JSONResponse(content=result , Message="Hello")
  
  
 # now for the video
