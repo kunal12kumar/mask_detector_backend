@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from app.routers import detect_image_video
 from app.services.load_trained_model import lifespan
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Face Mask Detection API",
@@ -25,3 +26,11 @@ async def root():
 
 # Register routers
 app.include_router(detect_image_video.router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # OR use your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
