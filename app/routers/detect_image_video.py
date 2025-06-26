@@ -12,7 +12,7 @@ async def detect__mask_of_image(file: UploadFile = File(...)):
      print("getting images")
      result = await process_image(file)
      print(result)
-     return JSONResponse(content=result , Message="Hello")
+     return JSONResponse(content={"message":"Hello" ,"result":result})
  
  
 # now for the video
