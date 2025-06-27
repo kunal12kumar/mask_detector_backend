@@ -29,7 +29,7 @@ app.include_router(detect_image_video.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # ✅ Use frontend's URL
+    allow_origins=["*"],  # ✅ Use frontend's URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
