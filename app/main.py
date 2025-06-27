@@ -1,5 +1,3 @@
-# In this we define everything about fast api actually initialize the fast api here for or it is the entry point of the fastapi 
-
 from fastapi import FastAPI
 from app.routers import detect_image_video
 from app.services.load_trained_model import lifespan
@@ -11,6 +9,16 @@ app = FastAPI(
     version="1.0.0",
     # lifespan=lifespan
 )
+
+# ✅ Add CORS middleware FIRST, before registering routers
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def root():
     """API root endpoint"""
@@ -24,14 +32,5 @@ async def root():
         }
     }
 
-# Register routers
+# ✅ Register routers AFTER CORS middleware
 app.include_router(detect_image_video.router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # ✅ Use frontend's URL
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
