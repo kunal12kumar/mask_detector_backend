@@ -7,12 +7,24 @@ HF_REPO_ID = "kunal12kumardev/Face_mask_detection"
 
 router=APIRouter()
 
+
+@router.get('/detect/test')
+async def test_endpoint():
+    return {"message": "Router is working!"}
+
 @router.post('/detect/image')
 async def detect__mask_of_image(file: UploadFile = File(...)):
-     print("getting images")
-     result = await process_image(file)
-     print(result)
-     return JSONResponse(content={"message":"Hello" ,"result":result})
+    try:
+        print("getting images")
+        result = await process_image(file)
+        print(result)
+        return JSONResponse(content={"message":"Hello" ,"result":result})
+    except Exception as e:
+        print(f"Error processing image: {str(e)}")
+        return JSONResponse(
+            content={"error": str(e)}, 
+            status_code=500
+        )
  
  
 # now for the video

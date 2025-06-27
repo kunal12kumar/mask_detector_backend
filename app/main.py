@@ -18,17 +18,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.get("/")
 async def root():
-    """API root endpoint"""
     return {
         "message": "Face Mask Detection API",
         "version": "1.0.0",
         "endpoints": {
-            "predict": "POST /predict - Upload image for detection",
-            "health": "GET /health - Check API health",
-            "model-info": "GET /model-info - Get model details"
+            "detect_image": "POST /detect/image - Upload image for detection",
+            "detect_video": "POST /detect/video - Upload video for detection",
         }
     }
 
