@@ -7,7 +7,7 @@ app = FastAPI(
     title="Face Mask Detection API",
     description="YOLO-based face mask detection using Hugging Face model",
     version="1.0.0",
-    # lifespan=lifespan
+    lifespan=lifespan
 )
 
 # ✅ Add CORS middleware FIRST, before registering routers
