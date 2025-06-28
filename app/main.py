@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from app.routers import detect_image_video
-from app.services.load_trained_model import lifespan
+# from app.services.load_trained_model import lifespan
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Face Mask Detection API",
     description="YOLO-based face mask detection using Hugging Face model",
     version="1.0.0",
-    lifespan=lifespan
+    # lifespan=lifespan
 )
 
 # ✅ Add CORS middleware FIRST, before registering routers

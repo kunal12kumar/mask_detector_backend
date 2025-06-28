@@ -4,6 +4,3 @@ opencv-python
 python-multipart
 ultralytics
 huggingface-hub
-pillow
-torch 
-torchvision

@@ -49,12 +49,12 @@ async def load_model():
     finally:
         model_loading = False
 
-# @asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Manage application lifespan"""
-    # Startup
-    logger.info("🚀 Starting Face Mask Detection API...")
-    await load_model()
-    yield
-    # Shutdown
-    logger.info("👋 Shutting down API...")
+# # @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     """Manage application lifespan"""
+#     # Startup
+#     logger.info("🚀 Starting Face Mask Detection API...")
+#     await load_model()
+#     yield
+#     # Shutdown
+#     logger.info("👋 Shutting down API...")
