@@ -1,11 +1,11 @@
 # In this we will load our model and pass the images and videos to give the result 
-# a function to lad the model
+# a function to load the model
 import logging
 from huggingface_hub import hf_hub_download
 from ultralytics import YOLO
 from fastapi import FastAPI
 
- #Configure logging
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -17,12 +17,20 @@ model_loading = False
 HF_REPO_ID = "kunal12kumardev/Face_mask_detection"  # 🔄 CHANGE THIS
 MODEL_FILENAME = "best.pt"
 
-async def load_model():
+def load_model():
     """Load model from Hugging Face Hub"""
     global model, model_loading
     
-    if model is not None or model_loading:
-        return
+    # If model is already loaded, return it
+    if model is not None:
+        logger.info("Model already loaded, returning existing model")
+        return model
+        
+    # If model is currently being loaded by another thread, wait
+    if model_loading:
+        logger.info("Model is currently being loaded, waiting...")
+        # You might want to add a small delay here if needed
+        return None
         
     model_loading = True
     logger.info("Starting model download from Hugging Face...")
@@ -32,7 +40,7 @@ async def load_model():
         model_path = hf_hub_download(
             repo_id=HF_REPO_ID,
             filename=MODEL_FILENAME,
-            cache_dir="./model_cache",  # Persistent cache directory
+            cache_dir="./model_cache",
             force_download=False
         )
         
@@ -41,20 +49,33 @@ async def load_model():
         # Load YOLO model
         model = YOLO(model_path)
         logger.info("✅ Model loaded successfully!")
+        logger.info(f"Model type: {type(model)}")
+        logger.info(f"Model classes: {model.names}")
+        
+        return model
         
     except Exception as e:
         logger.error(f"❌ Failed to load model: {e}")
+        import traceback
+        traceback.print_exc()
         model = None
         raise e
     finally:
         model_loading = False
 
-# # @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     """Manage application lifespan"""
-#     # Startup
-#     logger.info("🚀 Starting Face Mask Detection API...")
-#     await load_model()
-#     yield
-#     # Shutdown
-#     logger.info("👋 Shutting down API...")
+def get_model():
+    """Get the loaded model, load it if not already loaded"""
+    global model
+    if model is None:
+        logger.info("Model not loaded, loading now...")
+        load_model()
+    return model
+
+# Load model immediately when module is imported
+try:
+    logger.info("🚀 Initializing model on module import...")
+    load_model()
+    logger.info(f"✅ Module import complete. Model loaded: {model is not None}")
+except Exception as e:
+    logger.error(f"❌ Failed to load model during module import: {e}")
+    model = None
