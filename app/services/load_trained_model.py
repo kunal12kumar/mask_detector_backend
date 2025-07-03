@@ -72,10 +72,3 @@ def get_model():
     return model
 
 # Load model immediately when module is imported
-try:
-    logger.info("🚀 Initializing model on module import...")
-    load_model()
-    logger.info(f"✅ Module import complete. Model loaded: {model is not None}")
-except Exception as e:
-    logger.error(f"❌ Failed to load model during module import: {e}")
-    model = None
