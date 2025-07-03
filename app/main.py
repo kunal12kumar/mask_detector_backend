@@ -57,6 +57,16 @@ async def root():
             "detect_video": "POST /detect/video - Upload video for detection",
         }
     }
+    
+@app.get("/health")
+async def health_check():
+    """Check if model is loaded and ready"""
+    from app.services.load_trained_model import model
+    return {
+        "status": "healthy" if model is not None else "loading",
+        "model_loaded": model is not None,
+        "model_loading": False  # You can add model_loading check if needed
+    }
 
 # ✅ Register routers AFTER CORS middleware
 app.include_router(detect_image_video.router)
