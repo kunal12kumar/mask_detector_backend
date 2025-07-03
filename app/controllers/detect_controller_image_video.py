@@ -23,13 +23,13 @@ async def process_image(file):
         print(f"Model type: {type(current_model)}")
         print(f"Processing image: {file_path}")
         
-        # Read and process image
-        bgr_image = cv2.imread(file_path)
-        if bgr_image is None:
-            raise Exception(f"Could not read image from {file_path}")
+        # # Read and process image
+        # bgr_image = cv2.imread(file_path)
+        # if bgr_image is None:
+        #     raise Exception(f"Could not read image from {file_path}")
             
-        rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
-        plt.imshow(rgb_image)
+        # rgb_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+        # plt.imshow(rgb_image)
         
         # Run inference
         print("Running model inference...")

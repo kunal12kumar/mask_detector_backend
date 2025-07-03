@@ -18,7 +18,7 @@ async def detect__mask_of_image(file: UploadFile = File(...)):
         print("getting images")
         result = await process_image(file)
         print(result)
-        return JSONResponse(content={"message":"Hello" ,"result":result})
+        return JSONResponse(content={"message":"this is the result of the detection" ,"result":result})
     except Exception as e:
         print(f"Error processing image: {str(e)}")
         return JSONResponse(

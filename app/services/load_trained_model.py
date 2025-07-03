@@ -4,6 +4,8 @@ import logging
 from huggingface_hub import hf_hub_download
 from ultralytics import YOLO
 from fastapi import FastAPI
+import asyncio
+import threading
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -12,6 +14,7 @@ logger = logging.getLogger(__name__)
 # Global variables
 model = None
 model_loading = False
+model_lock = threading.Lock()
 
 # Replace with your Hugging Face model repository
 HF_REPO_ID = "kunal12kumardev/Face_mask_detection"  # 🔄 CHANGE THIS
@@ -66,9 +69,6 @@ def load_model():
 def get_model():
     """Get the loaded model, load it if not already loaded"""
     global model
-    if model is None:
-        logger.info("Model not loaded, loading now...")
-        load_model()
     return model
 
 # Load model immediately when module is imported
